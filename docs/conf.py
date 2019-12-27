@@ -23,10 +23,12 @@ project = 'Cartesian Genetics'
 copyright = '2019, eugtsa'
 author = 'eugtsa'
 
+rst_epilog = '.. |project| replace:: %s' % project
+
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '0.0.1'
 
 
 # -- General configuration ---------------------------------------------------
