@@ -68,10 +68,14 @@ class CartesianGenomeFunc:
         self._arity = max_arity
 
     def set_basis(self,new_basis):
-        """
+        """Set basis functions to genome function
+
         Set basis functions to genome function
-        :param new_basis: list of callables
-        :return: None
+
+        Args:
+            new_basis (list): list of callables for use as basis functions
+        Returns:
+            None: nothing to return
         """
         self._basis_funcs = new_basis
         self._count_and_set_max_arity_on_basis()
