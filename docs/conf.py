@@ -20,10 +20,15 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Cartesian Genetics'
+project_github = 'cartesian_genetics'
 copyright = '2019, eugtsa'
 author = 'eugtsa'
 
 rst_epilog = '.. |project| replace:: %s' % project
+rst_epilog += '\n.. |project_github| replace:: %s' % project_github
+rst_epilog += '\n.. |author| replace:: %s' % author
+
+
 
 # The short X.Y version
 version = ''

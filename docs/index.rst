@@ -27,8 +27,8 @@ Install |project| by running:
 Contribute
 ----------
 
-- Issue Tracker: github.com/|project|/|project|/issues
-- Source Code: github.com/|project|/|project|
+- Issue Tracker: github.com/|author|/|project_github|/issues
+- Source Code: github.com/|author|/|project_github|
 
 Support
 -------
