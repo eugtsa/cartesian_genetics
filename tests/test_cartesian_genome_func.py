@@ -18,7 +18,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -43,7 +43,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -71,7 +71,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -99,7 +99,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -130,7 +130,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -163,7 +163,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -196,7 +196,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -229,7 +229,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -261,7 +261,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -293,7 +293,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -325,7 +325,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -360,7 +360,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -395,7 +395,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows,
                                  arity=arity)
@@ -431,7 +431,7 @@ class TestBoolCartesian(unittest.TestCase):
         bc = CartesianGenomeFunc(n_inputs=n_inputs,
                                  n_outputs=n_outputs,
                                  depth=depth,
-                                 basis=basis,
+                                 basis_funcs=basis,
                                  recurse_depth=recurse_depth,
                                  n_rows=n_rows)
 
