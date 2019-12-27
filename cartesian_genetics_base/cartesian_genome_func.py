@@ -1,3 +1,7 @@
+"""
+This is cartesian genetics function module, used as representation of CGP function. It can decode genome and run as callable
+"""
+
 import math
 import random
 from inspect import signature

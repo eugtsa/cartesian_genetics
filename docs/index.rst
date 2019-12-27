@@ -11,6 +11,17 @@ Look how easy it is to use:
     # Get your stuff done
     project.do_stuff()
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
 Features
 --------
 
