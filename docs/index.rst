@@ -18,13 +18,6 @@ Look how easy it is to use:
 
    api
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 Features
 --------
 
@@ -54,3 +47,10 @@ License
 -------
 
 The project is licensed under the BSD license.
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
