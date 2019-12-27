@@ -14,7 +14,7 @@ Look how easy it is to use:
 .. autosummary::
      :toctree: stubs
 
-     CartesianGenomeFunc
+     cartesian_genetics_base.CartesianGenomeFunc
 
 .. toctree::
    :maxdepth: 2
@@ -38,7 +38,7 @@ Installation
 
 Install |project| by running:
 
-    install cartesian_genetics
+    pip install cartgen
 
 Contribute
 ----------
