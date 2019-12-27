@@ -1,7 +1,7 @@
-$project
-========
+|project|
+========================================
 
-$project is simple realization of CGP (https://en.wikipedia.org/wiki/Cartesian_genetic_programming)
+|project| is simple realization of CGP (https://en.wikipedia.org/wiki/Cartesian_genetic_programming)
 
 Look how easy it is to use:
 
@@ -20,15 +20,15 @@ Features
 Installation
 ------------
 
-Install $project by running:
+Install |project| by running:
 
     install cartesian_genetics
 
 Contribute
 ----------
 
-- Issue Tracker: github.com/$project/$project/issues
-- Source Code: github.com/$project/$project
+- Issue Tracker: github.com/|project|/|project|/issues
+- Source Code: github.com/|project|/|project|
 
 Support
 -------
