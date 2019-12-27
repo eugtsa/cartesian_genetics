@@ -1,4 +1,4 @@
-from cartesian_genome_func import CartesianGenomeFunc
+from cartesian_genetics_base.cartesian_genome_func import CartesianGenomeFunc
 import unittest
 
 class TestBoolCartesian(unittest.TestCase):
