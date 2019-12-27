@@ -1,5 +1,5 @@
 """
-This is cartesian genetics function module, used as representation of CGP function. It can decode genome and run as callable
+This is cartesian genetics module
 """
 
 import math
@@ -28,26 +28,16 @@ class CartesianGenomeFunc:
         Args:
             n_inputs (int): number on inputs
             n_outputs (int): number of outputs
-
+            depth (int): depth of genome func representation
+            n_rows (int): number of functions on each layer of depth
+            recurse_depth (int): depth of previous layers allowed to transmit inputs to each next level
+            arity (int): arity of basis functions, if not set then would be determined automatically on given basis
+            seed (int): random seed for random operations (init_random_genome and such)
+            basis_funcs (list): list of callable, basis functions for genome func representations
         Returns:
             CartesianGenomeFunc: constructed CG function representation
 
         """
-
-        #
-        # """
-        #
-        # Creates cartesian genome function. This function can calculate expressions with given genome and basis.
-        # :param int n_inputs: number on inputs
-        # :type n_inputs int
-        # :param int n_outputs: number of outputs
-        # :param int depth: depth of genome func representation
-        # :param int n_rows: number of functions on each layer of depth
-        # :param list basis_funcs: list of callable, basis functions for genome func representations
-        # :param int recurse_depth: depth of previous layers allowed to transmit inputs to each next level
-        # :param int|None arity: arity of basis functions, if not set then would be determined automatically on given basis
-        # :param int|None seed: random seed for random operations (init_random_genome and such)
-        # """
         self._basis_funcs = basis_funcs
         self._arity = arity
         if arity is None:
