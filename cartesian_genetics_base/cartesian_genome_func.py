@@ -90,17 +90,26 @@ class CartesianGenomeFunc:
         self._layers_calls.append([False, ] * self._n_outputs)
 
     def get_genome(self):
-        """
+        """Get current genome representation
+
         Get current genome representation
-        :return: list of floats
+
+        Args:
+
+        Returns:
+            list: list of floats
         """
         return self._genome
 
     def set_genome(self,new_genome):
-        """
+        """Validate and set current genome
+
         Validate and set current genome
-        :param new_genome: list of floats
-        :return:  None
+
+        Args:
+            new_genome: list of floats
+        Returns:
+            None:
         """
         assert len(new_genome) == self._n_rows*(self._arity+1)*self._depth+self._n_outputs
         assert all([v>=0.0 and v<=1.0 for v in new_genome])
@@ -132,10 +141,14 @@ class CartesianGenomeFunc:
         return self._basis_funcs[func_index]
 
     def call(self,input_vals):
-        """
+        """Call genome function with input vals
+
         Call genome function with input vals
-        :param input_vals: list of input arguments (arguments type depends on basis functions)
-        :return:
+
+        Args:
+            input_vals (list): list of input arguments (arguments type depends on basis functions)
+        Returns:
+            None:
         """
         self._make_top_down_propagation(input_vals)
         return list(self._layers_calls[-1])
@@ -182,8 +195,13 @@ class CartesianGenomeFunc:
         return inputs
 
     def init_random_genome(self):
-        """
+        """Inits random genome with uniform distribution
+
         Inits random genome with uniform distribution
-        :return: None
+
+        Args:
+
+        Returns:
+            None:
         """
         self.set_genome([random.random() for _ in self._genome])
