@@ -68,9 +68,9 @@ class CartesianGenomeFunc:
         self._arity = max_arity
 
     def set_basis(self,new_basis):
-        """Set basis functions to genome function
+        """Set functional basis basis
 
-        Set basis functions to genome function
+        Set basis functions to this genome function
 
         Args:
             new_basis (list): list of callables for use as basis functions
@@ -90,7 +90,7 @@ class CartesianGenomeFunc:
         self._layers_calls.append([False, ] * self._n_outputs)
 
     def get_genome(self):
-        """Get current genome representation
+        """Get genome
 
         Get current genome representation
 
@@ -102,9 +102,8 @@ class CartesianGenomeFunc:
         return self._genome
 
     def set_genome(self,new_genome):
-        """Validate and set current genome
-
-        Validate and set current genome
+        """
+        Validate and set genome using current basis
 
         Args:
             new_genome: list of floats
@@ -141,8 +140,7 @@ class CartesianGenomeFunc:
         return self._basis_funcs[func_index]
 
     def call(self,input_vals):
-        """Call genome function with input vals
-
+        """
         Call genome function with input vals
 
         Args:
@@ -195,8 +193,7 @@ class CartesianGenomeFunc:
         return inputs
 
     def init_random_genome(self):
-        """Inits random genome with uniform distribution
-
+        """
         Inits random genome with uniform distribution
 
         Args:
