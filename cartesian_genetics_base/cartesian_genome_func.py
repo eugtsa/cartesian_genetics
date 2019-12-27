@@ -29,6 +29,7 @@ class CartesianGenomeFunc:
         :param seed: int, random seed for random operations (init_random_genome and such)
         """
         self._basis = basis
+        self._arity = arity
         if arity is None:
             self._count_and_set_max_arity_on_basis(basis)
 
