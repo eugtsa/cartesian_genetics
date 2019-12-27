@@ -11,6 +11,11 @@ Look how easy it is to use:
     # Get your stuff done
     project.do_stuff()
 
+.. autosummary::
+     :toctree: stubs
+
+     CartesianGenomeFunc
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
