@@ -7,9 +7,10 @@ Look how easy it is to use:
 
 ::
 
-    import project
+    from cartgen import CGOptim
     # Get your stuff done
-    project.do_stuff()
+    cg_optim = CGOptim()
+    cg_optim.run_optimization()
 
 
 .. toctree::
@@ -34,19 +35,17 @@ Install |project| by running:
 Contribute
 ----------
 
-- Issue Tracker: github.com/|author|/|project_github|/issues
 - Source Code: github.com/|author|/|project_github|
 
 Support
 -------
 
-If you are having issues, please let us know.
-We have a mailing list located at: eugtsa@gmail.com
+Author's mail: eugtsa@gmail.com
 
 License
 -------
 
-The project is licensed under the BSD license.
+The project is licensed under the BSD license
 
 Indices and tables
 ==================

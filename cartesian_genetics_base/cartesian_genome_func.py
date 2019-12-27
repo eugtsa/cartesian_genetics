@@ -9,7 +9,7 @@ from inspect import signature
 
 class CartesianGenomeFunc:
     """
-    This class is simple and naive CGP function implementation (https://en.wikipedia.org/wiki/Cartesian_genetic_programming)
+    This class is simple and naive CGP function implementation (https://en.wikipedia.org/wiki/Cartesian_genetic_programming).
     It is still not optimized, goes front to back, propagate through all nodes to calculate result
     """
     def __init__(self,
@@ -17,25 +17,25 @@ class CartesianGenomeFunc:
                  n_outputs=None,
                  depth=None,
                  n_rows=None,
-                 basis=None,
+                 basis_funcs=None,
                  recurse_depth=1,
                  arity=None,
                  seed=None):
         """
         Creates cartesian genome function. This function can calculate expressions with given genome and basis.
-        :param n_inputs: int, number on inputs
-        :param n_outputs: int, number of outputs
-        :param depth: int, depth of genome func representation
-        :param n_rows: int, number of functions on each layer of depth
-        :param basis: list of callable, basis functions for genome func representations
-        :param recurse_depth: int, depth of previous layers allowed to transmit inputs to each next level
-        :param arity: int, arity of basis functions, if not set then would be determined automatically on given basis
-        :param seed: int, random seed for random operations (init_random_genome and such)
+        :param int n_inputs: number on inputs
+        :param int n_outputs: number of outputs
+        :param int depth: depth of genome func representation
+        :param int n_rows: number of functions on each layer of depth
+        :param list basis_funcs: list of callable, basis functions for genome func representations
+        :param int recurse_depth: depth of previous layers allowed to transmit inputs to each next level
+        :param int|None arity: arity of basis functions, if not set then would be determined automatically on given basis
+        :param int|None seed: random seed for random operations (init_random_genome and such)
         """
-        self._basis = basis
+        self._basis_funcs = basis_funcs
         self._arity = arity
         if arity is None:
-            self._count_and_set_max_arity_on_basis(basis)
+            self._count_and_set_max_arity_on_basis(basis_funcs)
 
         self._n_inputs = n_inputs
         self._n_outputs = n_outputs
@@ -67,7 +67,7 @@ class CartesianGenomeFunc:
         :param new_basis: list of callables
         :return: None
         """
-        self._basis = new_basis
+        self._basis_funcs = new_basis
         self._count_and_set_max_arity_on_basis()
         self._recreate_layer_funcs()
 
@@ -118,8 +118,8 @@ class CartesianGenomeFunc:
                 self._layer_funcs[-1].append((decoded_function,inputs_codes))
 
     def _get_function_from_basis(self,func_num):
-        func_index = math.floor(func_num*len(self._basis))
-        return self._basis[func_index]
+        func_index = math.floor(func_num * len(self._basis_funcs))
+        return self._basis_funcs[func_index]
 
     def call(self,input_vals):
         """
