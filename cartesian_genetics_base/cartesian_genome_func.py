@@ -101,6 +101,14 @@ class CartesianGenomeFunc:
         """
         return self._genome
 
+    def get_int_genome(self):
+        """
+        Args:
+
+        Returns:
+
+        """
+
     def set_genome(self,new_genome):
         """
         Validate and set genome using current basis
@@ -139,7 +147,7 @@ class CartesianGenomeFunc:
         func_index = math.floor(func_num * len(self._basis_funcs))
         return self._basis_funcs[func_index]
 
-    def call(self,input_vals):
+    def call(self, input_vals):
         """
         Call genome function with input vals
 
