@@ -151,4 +151,4 @@ class CartGenModel:
             raise NotImplementedError()
         test_preds = self._cgf.call([X[:, i] for i in range(X.shape[1])])
 
-        return np.vstack(test_preds)
+        return np.vstack([p.T for p in test_preds])
