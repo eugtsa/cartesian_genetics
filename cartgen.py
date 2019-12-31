@@ -56,7 +56,7 @@ class CartGenModel:
         self.elitarity_n = elitarity_n
         self.mutation_points = mutation_points
         self.recurse_depth = recurse_depth
-        self.n_inputs = n_inputs,
+        self.n_inputs = n_inputs
         self.n_outputs = n_outputs
         self.depth = depth
         self.n_rows = n_rows
