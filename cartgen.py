@@ -51,42 +51,71 @@ class CartGenModel:
             CartesianGenomeFunc: constructed CG function representation
 
         """
-        self._set_initial_params(arity, basis_funcs, cgf, depth, elitarity_n, metric_to_minimize, mutation_points,
-                                 n_generations, n_inputs, n_outputs, n_rows, recurse_depth, samples_in_gen, seed, tqdm)
+        self.n_generations = n_generations
+        self.samples_in_gen = samples_in_gen
+        self.elitarity_n = elitarity_n
+        self.mutation_points = mutation_points
+        self.recurse_depth = recurse_depth
+        self.n_inputs = n_inputs,
+        self.n_outputs = n_outputs
+        self.depth = depth
+        self.n_rows = n_rows
+        self.basis_funcs = basis_funcs
+        self.recurse_depth = 5
+        self.arity = arity
+        self.seed = seed
+        if cgf is not None and isinstance(cgf, CartesianGenomeFunc):
+            self.cgf = cgf
+            self.not_fitted_yet = False
+        else:
+            self.cgf = CartesianGenomeFunc(n_inputs=n_inputs,
+                                           n_outputs=n_outputs,
+                                           depth=depth,
+                                           n_rows=n_rows,
+                                           basis_funcs=basis_funcs,
+                                           recurse_depth=recurse_depth,
+                                           arity=arity, seed=seed)
+            self.not_fitted_yet = True
+        if seed is not None:
+            random.seed(seed)
+        self.metric_to_minimize = metric_to_minimize
+        self.tqdm = tqdm
+        if tqdm is None:
+            self.tqdm = lambda x: x
 
     def _set_initial_params(self, arity, basis_funcs, cgf, depth, elitarity_n, metric_to_minimize, mutation_points,
                             n_generations, n_inputs, n_outputs, n_rows, recurse_depth, samples_in_gen, seed, tqdm):
-        self._n_generations = n_generations
-        self._samples_in_gen = samples_in_gen
-        self._elitarity_n = elitarity_n
-        self._mutation_points = mutation_points
-        self._recurse_depth = recurse_depth
-        self._n_inputs = n_inputs,
-        self._n_outputs = n_outputs
-        self._depth = depth
-        self._n_rows = n_rows
-        self._basis_funcs = basis_funcs
-        self._recurse_depth = 5
-        self._arity = arity
-        self._seed = seed
+        self.n_generations = n_generations
+        self.samples_in_gen = samples_in_gen
+        self.elitarity_n = elitarity_n
+        self.mutation_points = mutation_points
+        self.recurse_depth = recurse_depth
+        self.n_inputs = n_inputs,
+        self.n_outputs = n_outputs
+        self.depth = depth
+        self.n_rows = n_rows
+        self.basis_funcs = basis_funcs
+        self.recurse_depth = 5
+        self.arity = arity
+        self.seed = seed
         if cgf is not None and isinstance(cgf, CartesianGenomeFunc):
-            self._cgf = cgf
-            self._not_fitted_yet = False
+            self.cgf = cgf
+            self.not_fitted_yet = False
         else:
-            self._cgf = CartesianGenomeFunc(n_inputs=n_inputs,
-                                            n_outputs=n_outputs,
-                                            depth=depth,
-                                            n_rows=n_rows,
-                                            basis_funcs=basis_funcs,
-                                            recurse_depth=recurse_depth,
-                                            arity=arity, seed=seed)
-            self._not_fitted_yet = True
+            self.cgf = CartesianGenomeFunc(n_inputs=n_inputs,
+                                           n_outputs=n_outputs,
+                                           depth=depth,
+                                           n_rows=n_rows,
+                                           basis_funcs=basis_funcs,
+                                           recurse_depth=recurse_depth,
+                                           arity=arity, seed=seed)
+            self.not_fitted_yet = True
         if seed is not None:
             random.seed(seed)
-        self._metric_to_minimize = metric_to_minimize
-        self._tqdm = tqdm
+        self.metric_to_minimize = metric_to_minimize
+        self.tqdm = tqdm
         if tqdm is None:
-            self._tqdm = lambda x: x
+            self.tqdm = lambda x: x
 
     def _get_mutated_samples(self, in_sample, n_points=1, new_samples_count=10):
         while new_samples_count != 0:
@@ -100,21 +129,21 @@ class CartGenModel:
             new_samples_count -= 1
 
     def get_params(self, deep = False):
-        return {'metric_to_minimize':self._metric_to_minimize,
-                 'n_generations':self._n_generations,
-                 'samples_in_gen': self._samples_in_gen,
-                 'elitarity_n': self._elitarity_n,
-                 'mutation_points' :self._mutation_points,
-                 'tqdm':self._tqdm,
-                 'n_inputs':self._n_inputs,
-                 'n_outputs':self._n_outputs,
-                 'depth':self._depth,
-                 'n_rows':self._n_rows,
-                 'basis_funcs':self._basis_funcs,
-                 'recurse_depth':self._depth,
-                 'arity':self._arity,
-                 'seed':self._seed,
-                 'cgf':self._cgf}
+        return {'metric_to_minimize':self.metric_to_minimize,
+                'n_generations':self.n_generations,
+                'samples_in_gen': self.samples_in_gen,
+                 'elitarity_n': self.elitarity_n,
+                 'mutation_points' :self.mutation_points,
+                 'tqdm':self.tqdm,
+                 'n_inputs':self.n_inputs,
+                 'n_outputs':self.n_outputs,
+                 'depth':self.depth,
+                 'n_rows':self.n_rows,
+                 'basis_funcs':self.basis_funcs,
+                 'recurse_depth':self.depth,
+                 'arity':self.arity,
+                 'seed':self.seed,
+                 'cgf':self.cgf}
 
     def set_params(self,**params):
         self._set_initial_params(**params)
@@ -133,20 +162,20 @@ class CartGenModel:
         """
         already_scored_cgp = dict()
 
-        cgf = self._cgf
+        cgf = self.cgf
 
         cgf.init_random_genome()
 
         preds = cgf.call([X[:, i] for i in range(X.shape[1])])[0]
-        self._top_scores = [self._metric_to_minimize(preds, y) for _ in range(self._elitarity_n)]
-        self._top_genomes = [cgf.get_genome() for _ in range(self._elitarity_n)]
+        self._top_scores = [self.metric_to_minimize(preds, y) for _ in range(self.elitarity_n)]
+        self._top_genomes = [cgf.get_genome() for _ in range(self.elitarity_n)]
 
         # learning genome for some generations
-        for gen in self._tqdm(range(self._n_generations)):
+        for gen in self.tqdm(range(self.n_generations)):
             for elitary_mutated_genomes in zip(*[
                 self._get_mutated_samples(self._top_genomes[_i_],
-                                          n_points=self._mutation_points,
-                                          new_samples_count=self._samples_in_gen)
+                                          n_points=self.mutation_points,
+                                          new_samples_count=self.samples_in_gen)
                                           for _i_ in range(len(self._top_genomes))]):
 
                     for new_sample in elitary_mutated_genomes:
@@ -155,7 +184,7 @@ class CartGenModel:
                         already_scored_cgp[tuple(new_sample)] = 1
                         cgf.set_genome(new_sample)
                         new_preds = cgf.call([X[:, i] for i in range(X.shape[1])])[0]
-                        new_score = self._metric_to_minimize(new_preds, y)
+                        new_score = self.metric_to_minimize(new_preds, y)
 
                         last_bigger = None
                         already_in = False
@@ -168,8 +197,8 @@ class CartGenModel:
                             self._top_genomes[last_bigger] = cgf.get_genome()
 
         # setting learned genome to self._cgf
-        self._cgf.set_genome(self._top_genomes[-1])
-        self._not_fitted_yet = False
+        self.cgf.set_genome(self._top_genomes[-1])
+        self.not_fitted_yet = False
         return self
 
     def predict(self, X):
@@ -183,9 +212,9 @@ class CartGenModel:
         Returns:
             CartGenModel: learned model with best learned self._cgf
         """
-        if self._not_fitted_yet:
+        if self.not_fitted_yet:
             logging.error('Model is not fitted! Use fit method or set_params method first!')
             raise NotImplementedError()
-        test_preds = self._cgf.call([X[:, i] for i in range(X.shape[1])])
+        test_preds = self.cgf.call([X[:, i] for i in range(X.shape[1])])
 
         return np.vstack(test_preds).T
