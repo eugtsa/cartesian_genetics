@@ -118,6 +118,7 @@ class CartGenModel:
 
     def set_params(self,**params):
         self._set_initial_params(**params)
+        return self
 
     def fit(self, X, y):
         """
