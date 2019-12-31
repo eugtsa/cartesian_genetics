@@ -25,7 +25,8 @@ class CartGenModel:
                  basis_funcs = None,
                  recurse_depth = 5,
                  arity = None,
-                 seed = None):
+                 seed = None,
+                 cgf = None):
         """CGP Model for ML
 
         Uses regression with cartesian genome function, optimized with elitarity N+lambda genetic process
@@ -45,29 +46,44 @@ class CartGenModel:
             arity (int): arity of basis functions, if not set then would be determined automatically on given basis
             seed (int): random seed for random operations (init_random_genome and such)
             basis_funcs (list): list of callable, basis functions for genome func representations
+            cgf (CartesianGenomeFunc) : function to use as cgf if you don't want to create one
         Returns:
             CartesianGenomeFunc: constructed CG function representation
 
         """
+        self._set_initial_params(arity, basis_funcs, cgf, depth, elitarity_n, metric_to_minimize, mutation_points,
+                                 n_generations, n_inputs, n_outputs, n_rows, recurse_depth, samples_in_gen, seed, tqdm)
+
+    def _set_initial_params(self, arity, basis_funcs, cgf, depth, elitarity_n, metric_to_minimize, mutation_points,
+                            n_generations, n_inputs, n_outputs, n_rows, recurse_depth, samples_in_gen, seed, tqdm):
         self._n_generations = n_generations
         self._samples_in_gen = samples_in_gen
         self._elitarity_n = elitarity_n
         self._mutation_points = mutation_points
         self._recurse_depth = recurse_depth
-        self._cgf = CartesianGenomeFunc(n_inputs=n_inputs,
-                                        n_outputs=n_outputs,
-                                        depth=depth,
-                                        n_rows=n_rows,
-                                        basis_funcs=basis_funcs,
-                                        recurse_depth=recurse_depth,
-                                        arity=arity, seed=seed)
-        self._not_fitted_yet = True
-
+        self._n_inputs = n_inputs,
+        self._n_outputs = n_outputs
+        self._depth = depth
+        self._n_rows = n_rows
+        self._basis_funcs = basis_funcs
+        self._recurse_depth = 5
+        self._arity = arity
+        self._seed = seed
+        if cgf is not None and isinstance(cgf, CartesianGenomeFunc):
+            self._cgf = cgf
+            self._not_fitted_yet = False
+        else:
+            self._cgf = CartesianGenomeFunc(n_inputs=n_inputs,
+                                            n_outputs=n_outputs,
+                                            depth=depth,
+                                            n_rows=n_rows,
+                                            basis_funcs=basis_funcs,
+                                            recurse_depth=recurse_depth,
+                                            arity=arity, seed=seed)
+            self._not_fitted_yet = True
         if seed is not None:
             random.seed(seed)
-
         self._metric_to_minimize = metric_to_minimize
-
         self.tqdm = tqdm
         if tqdm is None:
             self.tqdm = lambda x: x
@@ -82,6 +98,26 @@ class CartGenModel:
                 points_to_do -= 1
             yield new_sample
             new_samples_count -= 1
+
+    def get_params(self, deep = False):
+        return {'metric_to_minimize':self._metric_to_minimize,
+                 'n_generations':self._n_generations,
+                 'samples_in_gen': self._samples_in_gen,
+                 'elitarity_n': self._elitarity_n,
+                 'mutation_points' :self._mutation_points,
+                 'tqdm':self.tqdm,
+                 'n_inputs':self._n_inputs,
+                 'n_outputs':self._n_outputs,
+                 'depth':self._depth,
+                 'n_rows':self._n_rows,
+                 'basis_funcs':self._basis_funcs,
+                 'recurse_depth':self._depth,
+                 'arity':self._arity,
+                 'seed':self._seed,
+                 'cgf':self._cgf}
+
+    def set_params(self,**params):
+        self._set_initial_params(**params)
 
     def fit(self, X, y):
         """
