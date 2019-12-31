@@ -84,9 +84,9 @@ class CartGenModel:
         if seed is not None:
             random.seed(seed)
         self._metric_to_minimize = metric_to_minimize
-        self.tqdm = tqdm
+        self._tqdm = tqdm
         if tqdm is None:
-            self.tqdm = lambda x: x
+            self._tqdm = lambda x: x
 
     def _get_mutated_samples(self, in_sample, n_points=1, new_samples_count=10):
         while new_samples_count != 0:
@@ -105,7 +105,7 @@ class CartGenModel:
                  'samples_in_gen': self._samples_in_gen,
                  'elitarity_n': self._elitarity_n,
                  'mutation_points' :self._mutation_points,
-                 'tqdm':self.tqdm,
+                 'tqdm':self._tqdm,
                  'n_inputs':self._n_inputs,
                  'n_outputs':self._n_outputs,
                  'depth':self._depth,
@@ -142,7 +142,7 @@ class CartGenModel:
         self._top_genomes = [cgf.get_genome() for _ in range(self._elitarity_n)]
 
         # learning genome for some generations
-        for gen in self.tqdm(range(self._n_generations)):
+        for gen in self._tqdm(range(self._n_generations)):
             for elitary_mutated_genomes in zip(*[
                 self._get_mutated_samples(self._top_genomes[_i_],
                                           n_points=self._mutation_points,
