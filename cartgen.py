@@ -167,7 +167,8 @@ class CartGenModel:
                  'recurse_depth':self.depth,
                  'arity':self.arity,
                  'seed':self.seed,
-                 'cgf':self.cgf}
+                 'cgf':self.cgf,
+                  'full_mutate_prob':self.full_mutate_prob}
 
     def set_params(self,**params):
         if params:
