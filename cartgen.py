@@ -79,6 +79,9 @@ class CartGenModel:
                                            recurse_depth=recurse_depth,
                                            arity=arity, seed=seed)
             self.not_fitted_yet = True
+
+        if self.arity is None:
+            self.arity = cgf._arity
         if seed is not None:
             random.seed(seed)
         self.metric_to_minimize = metric_to_minimize
