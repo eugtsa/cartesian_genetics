@@ -25,6 +25,7 @@ class CartGenModel:
                  basis_funcs = None,
                  recurse_depth = 5,
                  arity = None,
+                 full_mutate_prob = 0.0,
                  seed = None,
                  cgf = None):
         """CGP Model for ML
@@ -45,6 +46,7 @@ class CartGenModel:
             recurse_depth (int): depth of previous layers allowed to transmit inputs to each next level
             arity (int): arity of basis functions, if not set then would be determined automatically on given basis
             seed (int): random seed for random operations (init_random_genome and such)
+            full_mutate_prob (float): probability of all possible mutation occurs for some individual
             basis_funcs (list): list of callable, basis functions for genome func representations
             cgf (CartesianGenomeFunc) : function to use as cgf if you don't want to create one
         Returns:
@@ -61,6 +63,7 @@ class CartGenModel:
         self.depth = depth
         self.n_rows = n_rows
         self.basis_funcs = basis_funcs
+        self.full_mutate_prob = full_mutate_prob
         self.recurse_depth = 5
         self.arity = arity
         self.seed = seed
@@ -84,7 +87,7 @@ class CartGenModel:
             self.tqdm = lambda x: x
 
     def _set_initial_params(self, arity, basis_funcs, cgf, depth, elitarity_n, metric_to_minimize, mutation_points,
-                            n_generations, n_inputs, n_outputs, n_rows, recurse_depth, samples_in_gen, seed, tqdm):
+                            n_generations, n_inputs, n_outputs, n_rows, recurse_depth, samples_in_gen, seed, tqdm,full_mutate_prob):
         self.n_generations = n_generations
         self.samples_in_gen = samples_in_gen
         self.elitarity_n = elitarity_n
@@ -96,6 +99,7 @@ class CartGenModel:
         self.n_rows = n_rows
         self.basis_funcs = basis_funcs
         self.recurse_depth = 5
+        self.full_mutate_prob = full_mutate_prob
         self.arity = arity
         self.seed = seed
         if cgf is not None and isinstance(cgf, CartesianGenomeFunc):
@@ -117,13 +121,30 @@ class CartGenModel:
         if tqdm is None:
             self.tqdm = lambda x: x
 
-    def _get_mutated_samples(self, in_sample, n_points=1, new_samples_count=10):
+    def _get_mutated_samples(self, in_sample, n_points=1, new_samples_count=10, full_mutate_prob=0.0):
         while new_samples_count != 0:
             points_to_do = n_points
             new_sample = [v for v in in_sample]
+
+            if full_mutate_prob>0:
+                if random.random()<full_mutate_prob:
+                    mutate_point = random.choice([i for i in range(len(in_sample))])
+                    if mutate_point%3!=0:
+                        n_to_mutate = self.arity*self.n_rows
+                    else:
+                        n_to_mutate = len(self.basis_funcs)
+
+                    for i in range(n_to_mutate):
+                        returned_sample = [v for v in in_sample]
+                        returned_sample[mutate_point] = float(i)/n_to_mutate
+                        yield returned_sample
+
+                    new_samples_count -= 1
+                    continue
+
             while points_to_do > 0:
                 mutate_point = random.choice([i for i in range(len(in_sample))])
-                new_sample = [v if i != mutate_point else random.random() for i, v in enumerate(new_sample)]
+                new_sample[mutate_point] = random.random()
                 points_to_do -= 1
             yield new_sample
             new_samples_count -= 1
@@ -176,7 +197,8 @@ class CartGenModel:
             for elitary_mutated_genomes in zip(*[
                 self._get_mutated_samples(self._top_genomes[_i_],
                                           n_points=self.mutation_points,
-                                          new_samples_count=self.samples_in_gen)
+                                          new_samples_count=self.samples_in_gen,
+                                          full_mutate_prob = self.full_mutate_prob)
                                           for _i_ in range(len(self._top_genomes))]):
 
                     for new_sample in elitary_mutated_genomes:
