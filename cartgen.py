@@ -81,7 +81,7 @@ class CartGenModel:
             self.not_fitted_yet = True
 
         if self.arity is None:
-            self.arity = cgf._arity
+            self.arity = self.cgf._arity
         if seed is not None:
             random.seed(seed)
         self.metric_to_minimize = metric_to_minimize
