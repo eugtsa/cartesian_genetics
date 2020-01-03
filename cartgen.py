@@ -129,26 +129,26 @@ class CartGenModel:
             points_to_do = n_points
             new_sample = [v for v in in_sample]
 
+            while points_to_do > 0:
+                mutate_point = random.choice([i for i in range(len(in_sample))])
+                new_sample[mutate_point] = random.random()
+                points_to_do -= 1
+
             if full_mutate_prob>0:
                 if random.random()<full_mutate_prob:
-                    mutate_point = random.choice([i for i in range(len(in_sample))])
                     if mutate_point%3!=0:
                         n_to_mutate = self.arity*self.n_rows
                     else:
                         n_to_mutate = len(self.basis_funcs)
 
                     for i in range(n_to_mutate):
-                        returned_sample = [v for v in in_sample]
+                        returned_sample = [v for v in new_sample]
                         returned_sample[mutate_point] = float(i)/n_to_mutate
                         yield returned_sample
 
                     new_samples_count -= 1
                     continue
 
-            while points_to_do > 0:
-                mutate_point = random.choice([i for i in range(len(in_sample))])
-                new_sample[mutate_point] = random.random()
-                points_to_do -= 1
             yield new_sample
             new_samples_count -= 1
 
