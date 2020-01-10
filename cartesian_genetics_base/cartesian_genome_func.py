@@ -34,6 +34,7 @@ class CartesianGenomeFunc:
             arity (int): arity of basis functions, if not set then would be determined automatically on given basis
             seed (int): random seed for random operations (init_random_genome and such)
             basis_funcs (list): list of callable, basis functions for genome func representations
+
         Returns:
             CartesianGenomeFunc: constructed CG function representation
 
@@ -74,6 +75,7 @@ class CartesianGenomeFunc:
 
         Args:
             new_basis (list): list of callables for use as basis functions
+
         Returns:
             None: nothing to return
         """
@@ -115,6 +117,7 @@ class CartesianGenomeFunc:
 
         Args:
             new_genome: list of floats
+
         Returns:
             None:
         """
@@ -153,6 +156,7 @@ class CartesianGenomeFunc:
 
         Args:
             input_vals (list): list of input arguments (arguments type depends on basis functions)
+
         Returns:
             None:
         """
