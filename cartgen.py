@@ -33,6 +33,7 @@ class CartGenModel:
     Examples:
 
         ::
+
             import numpy as np
             from cartgen import CartGenModel
             from tqdm import tqdm_notebook
