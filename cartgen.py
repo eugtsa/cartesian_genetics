@@ -1,5 +1,5 @@
 """
-This is the main module of cartesian_genetics library
+Modules for simple use in sklearn
 """
 
 import random
@@ -9,7 +9,7 @@ from cartesian_genetics_base.cartesian_genome_func import CartesianGenomeFunc
 
 class CartGenModel:
     """
-
+    CGP Model for ML with sklearn interface
     """
     def __init__(self,
                  metric_to_minimize=None,
@@ -28,9 +28,7 @@ class CartGenModel:
                  full_mutate_prob = 0.0,
                  seed = None,
                  cgf = None):
-        """CGP Model for ML
-
-        Uses regression with cartesian genome function, optimized with elitarity N+lambda genetic process
+        """CGP Model for ML. Uses regression with cartesian genome function, optimized with elitarity N+lambda genetic process
 
         Args:
             metric_to_minimize (callable): metric function with signature analogous to sklearn (see sklearn metrics) to minimize
@@ -49,6 +47,7 @@ class CartGenModel:
             full_mutate_prob (float): probability of all possible mutation occurs for some individual
             basis_funcs (list): list of callable, basis functions for genome func representations
             cgf (CartesianGenomeFunc) : function to use as cgf if you don't want to create one
+
         Returns:
             CartesianGenomeFunc: constructed CG function representation
 
@@ -152,7 +151,15 @@ class CartGenModel:
             yield new_sample
             new_samples_count -= 1
 
-    def get_params(self, deep = False):
+    def get_params(self, deep=False):
+        """Get parameters of fitted estimator (sklearn interface here: https://scikit-learn.org/stable/developers/develop.html#cloning)
+
+        Args:
+            deep(bool): sklearn parameter stub
+
+        Returns:
+            dict with parameters of estimator
+        """
         return {'metric_to_minimize':self.metric_to_minimize,
                 'n_generations':self.n_generations,
                 'samples_in_gen': self.samples_in_gen,
@@ -168,21 +175,28 @@ class CartGenModel:
                  'arity':self.arity,
                  'seed':self.seed,
                  'cgf':self.cgf,
-                  'full_mutate_prob':self.full_mutate_prob}
+                 'full_mutate_prob':self.full_mutate_prob}
 
     def set_params(self,**params):
+        """Set parameters of fitted estimator (sklearn interface here: https://scikit-learn.org/stable/developers/develop.html#cloning)
+
+        Args:
+            params(kwargs): parameters kwargs
+
+        Returns:
+            CartGenModel: model with parameters from kwargs
+        """
         if params:
             self._set_initial_params(**params)
         return self
 
     def fit(self, X, y):
-        """
-
-        Fit X and y: run genetic evolution for some generations and acquire best learned CGF
+        """Fit X and y: run genetic evolution for some generations and acquire best learned CGF
 
         Args:
             X (numpy.array): numpy array matrix with features to learn
             y (numpy.array): numpy array matrix with target to learn
+
         Returns:
             CartGenModel: learned model with best learned self._cgf
         """
@@ -229,13 +243,12 @@ class CartGenModel:
         return self
 
     def predict(self, X):
-        """
-
-        Predict X by running best fitted CGF function
+        """Predict X by running best fitted CGF function
 
         Args:
             X (numpy.array): numpy array matrix with features to learn
             y (numpy.array): numpy array matrix with target to learn
+
         Returns:
             CartGenModel: learned model with best learned self._cgf
         """
