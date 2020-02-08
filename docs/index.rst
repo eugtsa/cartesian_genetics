@@ -129,7 +129,7 @@ Using together with bagging regressor from sklearn
 
     from sklearn.ensemble import BaggingRegressor
 
-    bclf = BaggingClassifier(base_estimator=model, n_estimators=10, max_samples=1.0, max_features=1.0, bootstrap=True,
+    bclf = BaggingRegressor(base_estimator=model, n_estimators=10, max_samples=1.0, max_features=1.0, bootstrap=True,
                                    bootstrap_features=False, oob_score=False,
                                    warm_start=False, n_jobs=None, random_state=None, verbose=0)
 
