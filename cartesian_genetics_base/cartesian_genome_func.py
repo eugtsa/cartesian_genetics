@@ -1,5 +1,6 @@
 """
-This is cartesian genetics module
+``cartesian_genome_func`` is module with cartesian genome functions representation. Currently consists of pure python
+3.x non-optimized ``CartesianGenomeFunc``.
 """
 
 import math
@@ -8,9 +9,18 @@ from inspect import signature
 
 
 class CartesianGenomeFunc:
-    """
-    This class is simple and naive CGP function implementation (https://en.wikipedia.org/wiki/Cartesian_genetic_programming).
+    """``CartesianGenomeFunc`` class is simple and naive CGP function implementation (https://en.wikipedia.org/wiki/Cartesian_genetic_programming).
     It is still not optimized, goes front to back, propagate through all nodes to calculate result
+
+    Args:
+            n_inputs (int): number on inputs
+            n_outputs (int): number of outputs
+            depth (int): depth of genome func representation
+            n_rows (int): number of functions on each layer of depth
+            recurse_depth (int): depth of previous layers allowed to transmit inputs to each next level
+            arity (int): arity of basis functions, if not set then would be determined automatically on given basis
+            seed (int): random seed for random operations (init_random_genome and such)
+            basis_funcs (list): list of callable, basis functions for genome func representations
     """
     def __init__(self,
                  n_inputs=None,
@@ -21,9 +31,7 @@ class CartesianGenomeFunc:
                  recurse_depth=1,
                  arity=None,
                  seed=None):
-        """CGP function representation
-
-        Creates cartesian genome function. This function can calculate expressions with given genome and basis.
+        """CGP function representation. Creates cartesian genome function. This function can calculate expressions with given genome and basis.
 
         Args:
             n_inputs (int): number on inputs
@@ -69,9 +77,7 @@ class CartesianGenomeFunc:
         self._arity = max_arity
 
     def set_basis(self,new_basis):
-        """Set functional basis basis
-
-        Set basis functions to this genome function
+        """Set basis functions to this genome function
 
         Args:
             new_basis (list): list of callables for use as basis functions
@@ -92,34 +98,28 @@ class CartesianGenomeFunc:
         self._layers_calls.append([False, ] * self._n_outputs)
 
     def get_genome(self):
-        """Get genome
-
-        Get current genome representation
-
-        Args:
+        """Get current genome representation
 
         Returns:
-            list: list of floats
+            list: list of floats with current genome
         """
         return self._genome
 
     def get_int_genome(self):
-        """
-        Args:
+        """Get current genome representation as ``int`` type, could be used to well-build optimisation. Todo in 0.0.2 version
 
         Returns:
-
+            list: list of ints with current genome
         """
 
     def set_genome(self,new_genome):
-        """
-        Validate and set genome using current basis
+        """Validate and set genome using current basis
 
         Args:
             new_genome: list of floats
 
         Returns:
-            None:
+            None: inplace operation, returns None
         """
         assert len(new_genome) == self._n_rows*(self._arity+1)*self._depth+self._n_outputs
         assert all([v>=0.0 and v<=1.0 for v in new_genome])
@@ -151,14 +151,13 @@ class CartesianGenomeFunc:
         return self._basis_funcs[func_index]
 
     def call(self, input_vals):
-        """
-        Call genome function with input vals
+        """Call genome function with input vals
 
         Args:
             input_vals (list): list of input arguments (arguments type depends on basis functions)
 
         Returns:
-            None:
+            list: output values from output layer
         """
         self._make_top_down_propagation(input_vals)
         return list(self._layers_calls[-1])
@@ -205,12 +204,9 @@ class CartesianGenomeFunc:
         return inputs
 
     def init_random_genome(self):
-        """
-        Inits random genome with uniform distribution
-
-        Args:
+        """Inits random genome with uniform distribution
 
         Returns:
-            None:
+            None: inits random genome inplace, doesn't return anything
         """
         self.set_genome([random.random() for _ in self._genome])
