@@ -32,8 +32,6 @@ class CartGenModel:
 
     Examples:
 
-        One model example with sklearn multiclass
-
         ::
             import numpy as np
             from cartgen import CartGenModel
@@ -103,8 +101,6 @@ class CartGenModel:
 
             test_preds = model.predict(X_test)
             print(mean_absolute_error(test_preds,y_test))
-
-        Building boosting with same kind of task
 
         ::
 
