@@ -1,5 +1,5 @@
 """
-Modules for simple use in sklearn
+``cartgen`` is module with models which could be used with sklearn library.
 """
 
 import random
@@ -8,8 +8,117 @@ import logging
 from cartesian_genetics_base.cartesian_genome_func import CartesianGenomeFunc
 
 class CartGenModel:
-    """
-    CGP Model for ML with sklearn interface
+    """``CartGenModel`` is a class with model which could process any ML task (regression, classification, multiclass,
+    etc). It utilizes sklearn interface for usage. It consists of simple generations-based optimizer for
+    ``CartesianGenomeFunc`` and any custom metric.
+
+    Args:
+            metric_to_minimize (callable): metric function with signature analogous to sklearn (see sklearn metrics) to minimize
+            n_generations (int): number of generations to evolve
+            samples_in_gen (int): number of samples in each generation for each elitary sample
+            elitarity_n (int): number of elite best samples to save
+            mutation_points (int): number of points to mutate in each elitary sample on new samples acquisition
+            tqdm (callable): tqdm function with signature: lambda x: x . Use tqdm or tqdm_notebook from tqdm package
+            n_inputs (int): number on inputs
+            n_outputs (int): number of outputs
+            depth (int): depth of genome func representation
+            n_rows (int): number of functions on each layer of depth
+            recurse_depth (int): depth of previous layers allowed to transmit inputs to each next level
+            arity (int): arity of basis functions, if not set then would be determined automatically on given basis
+            seed (int): random seed for random operations (init_random_genome and such)
+            full_mutate_prob (float): probability of all possible mutation occurs for some individual
+            basis_funcs (list): list of callable, basis functions for genome func representations
+            cgf (CartesianGenomeFunc) : function to use as cgf if you don't want to create one
+
+    Examples:
+
+        One model example with sklearn multiclass
+
+        ::
+            import numpy as np
+            from cartgen import CartGenModel
+            from tqdm import tqdm_notebook
+            from sklearn.datasets import load_digits
+            from sklearn.metrics import mean_absolute_error
+            from sklearn.model_selection import train_test_split
+            from sklearn.utils import shuffle
+            from sklearn.preprocessing import StandardScaler
+
+            dataset = load_digits()
+            data,target = dataset['data'],dataset['target']
+
+            data,target = shuffle(data,target,random_state=1)
+            data = StandardScaler().fit_transform(data)
+
+            X_train,X_test,y_train,y_test = train_test_split(data,target,test_size=0.33,random_state=42)
+
+            def sqrt(x):
+                return np.sqrt(np.abs(x))
+
+            def log(x):
+                return np.log(np.abs(x+0.00001))
+
+            def summ(x,y):
+                return x+y
+
+            def diff(x,y):
+                return x-y
+
+            def div(x,y):
+                return x/(y+0.1)
+
+            def neg(x):
+                return -x
+
+            def mult(x,y):
+                return x*y
+
+            def div_2(x):
+                return x/2
+
+            def mult_3(x):
+                return x*3
+
+            def abss(x):
+                return np.abs(x)
+
+
+            basis = [sqrt,log,neg,summ,mult,div,abss,div_2,mult_3,diff]
+
+            model = CartGenModel(metric_to_minimize=mean_absolute_error,
+                                 n_generations=150,
+                                samples_in_gen=50,
+                                mutation_points=3,
+                                elitarity_n=9,
+                                tqdm=tqdm_notebook,
+                                n_inputs=X_train.shape[1],
+                                n_outputs=1,
+                                depth=36,
+                                recurse_depth=9,
+                                basis_funcs=basis,
+                                seed=9,
+                                n_rows=1)
+
+            model.fit(X_train,y_train)
+
+            test_preds = model.predict(X_test)
+            print(mean_absolute_error(test_preds,y_test))
+
+        Building boosting with same kind of task
+
+        ::
+
+            from sklearn.ensemble import BaggingRegressor
+
+            bclf = BaggingClassifier(base_estimator=model, n_estimators=10, max_samples=1.0, max_features=1.0, bootstrap=True,
+                                           bootstrap_features=False, oob_score=False,
+                                           warm_start=False, n_jobs=None, random_state=None, verbose=0)
+
+            bclf.fit(X_train,y_train)
+
+            test_preds = bclf.predict(X_test)
+            print(mean_absolute_error(test_preds,y_test))
+
     """
     def __init__(self,
                  metric_to_minimize=None,
