@@ -3,8 +3,6 @@
 
 |project| is simple realization of CGP (https://en.wikipedia.org/wiki/Cartesian_genetic_programming)
 
-Look how easy it is to use:
-
 .. toctree::
    :maxdepth: 4
    :caption: Contents:
@@ -15,7 +13,7 @@ Features
 --------
 
 - support any basis functions with any arity count
-- native representation, without any (!) dependencies for python 3.0
+- native representation, without any (!) dependencies for python 3.x
 
 Installation
 ------------
