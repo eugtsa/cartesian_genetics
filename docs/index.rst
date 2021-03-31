@@ -146,7 +146,7 @@ Author's mail: eugtsa@gmail.com
 License
 -------
 
-The project is licensed under the BSD license
+The project is licensed under the GPLv3 license
 
 Indices and tables
 ==================
